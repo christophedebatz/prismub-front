@@ -1,0 +1,51 @@
+{
+  "name": "handsome.gift",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-css-modules-transform": "^1.5.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "0.11.2",
+    "html-webpack-plugin": "^3.0.6",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "path": "^0.12.7",
+    "prettier": "^1.11.0",
+    "react-scripts": "^1.0.17",
+    "style-loader": "^0.20.3",
+    "url-loader": "^1.0.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-preset-react": "^6.24.1",
+    "moment": "^2.21.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "next",
+    "react-toastify": "^3.4.1",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "sanitize.css": "^5.0.0",
+    "semantic-ui-css": "^2.3.0",
+    "semantic-ui-react": "^0.78.3"
+  },
+  "scripts": {
+    "start": "set NODE_ENV=dev && webpack-dev-server --open",
+    "build": "NODE_ENV=dev webpack",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{json,css,md}": ["prettier --write --single-quote", "git add"]
+  }
+}
