@@ -1,9 +1,9 @@
 const env = {
   dev: {
-    apiBaseUri: ''
+    apiBaseUri: 'http://localhost:3001'
   },
   prod: {
-    apiBaseUri: ''
+    apiBaseUri: 'http://localhost:3001'
   }
 };
 
