@@ -2,3 +2,8 @@ body {
   margin: auto;
   width: 75%;
 }
+
+.logo {
+  display: inline;
+  margin-right: 10px;
+}

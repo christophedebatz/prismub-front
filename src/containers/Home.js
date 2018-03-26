@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Container from './Container';
 import { RepositorySelector } from '../components/RepositorySelector';
-import connectPicture from '../../public/github-connect.png';
 
 export default class Home extends Component {
 
@@ -11,7 +10,10 @@ export default class Home extends Component {
   }
 
   onRepositoryChosen(repository) {
-    console.log('repo=', repository);
+    // do xhr for metrics and for registering metrics
+    // get the metrics id
+    // this.props.history.push(`/metrics${metrics.id}`);
+    this.props.history.push('/lol');
   }
 
   render() {
