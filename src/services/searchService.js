@@ -5,12 +5,12 @@ import ApiException from './ApiException';
 
 const searchService = {
 
-  searchRepositories: search => {
+  searchRepositories: (search, page) => {
     return new Promise((resolve, reject) => {
       if (search) {
         const uri = HttpHelper.getEndpointUri('/repositories');
         return axios
-          .get(uri, { params: { search } })
+          .get(uri, { params: { search, page } })
           .then(response => resolve(response.data))
           .catch(err => HttpHelper.rejectError(err, reject));
       }
