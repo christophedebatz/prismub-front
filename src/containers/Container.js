@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { PageHeader, Image } from 'react-bootstrap';
-import logoPicture from '../../public/logo.png';
 
 export default class Container extends Component {
 
@@ -9,7 +8,7 @@ export default class Container extends Component {
     return (
       <div>
         <PageHeader>
-          <Image responsive src={logoPicture} className="logo" width={50} height={50} />
+          <Image responsive src="/public/logo.png" className="logo" width={50} height={50} />
           Prismub <small>Github metrics, simplified.</small>
         </PageHeader>
         <div>

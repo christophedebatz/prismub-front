@@ -69,7 +69,7 @@ export class RepositorySelector extends Component {
         maxResults={RepositorySelector.ITEMS_PER_PAGE - 1}
         paginate
         submitFormOnEnter
-        ref={(ref) => this._typeahead = ref}
+        ref={ref => this._typeahead = ref}
         onSearch={this.onSearch}
         onInputChange={this.onInputChange}
         onPaginate={this.onPaginate}

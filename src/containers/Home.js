@@ -10,10 +10,8 @@ export default class Home extends Component {
   }
 
   onRepositoryChosen(repository) {
-    // do xhr for metrics and for registering metrics
-    // get the metrics id
-    // this.props.history.push(`/metrics${metrics.id}`);
-    this.props.history.push('/lol');
+    const key = btoa(`${repository.owner.name}#!!#${repository.name}`);
+    this.props.history.push(`/metrics/${key}`);
   }
 
   render() {

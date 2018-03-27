@@ -24,14 +24,18 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-preset-react": "^6.24.1",
+    "chart.js": "^2.7.2",
     "moment": "^2.21.0",
+    "query-string": "^6.0.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-typeahead": "^2.6.0",
+    "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.2.0",
+    "react-loader": "^2.4.3",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-toastify": "^3.4.1",
+    "react-toastify": "^3.4.3",
     "sanitize.css": "^5.0.0"
   },
   "scripts": {
