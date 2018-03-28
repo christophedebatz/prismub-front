@@ -1,11 +1,13 @@
-import { Panel, Tab, Tabs } from 'react-bootstrap';
 import React, { Component } from 'react';
-import { Pie } from 'react-chartjs-2';
-import Loader from 'react-loader';
-import Container from './Container';
-import { RepositorySelector } from '../components/RepositorySelector';
+import { Tab, Tabs } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 import metricsService from '../services/metricsService';
 import { Strings } from '../helpers/strings.js';
+import Container from './Container';
+import { RepositorySelector } from '../components/RepositorySelector';
+import ImplicationTab from '../components/ImplicationTab';
+import CommittersTab from '../components/CommittersTab';
+import CommitsLineTab from '../components/CommitsLineTab';
 
 export default class Metric extends Component {
 
@@ -14,11 +16,27 @@ export default class Metric extends Component {
     this.getChartData = this.getChartData.bind(this);
     this.onRepositoryChosen = this.onRepositoryChosen.bind(this);
     this.fetchMetrics = this.fetchMetrics.bind(this);
+    this.onDataError = this.onDataError.bind(this);
+
     this.state = {
       isLoading: false,
       data: null,
-      key: this.props.match.params.key
+      metrics: [],
+      key: this.props.match.params.key,
+      repository: {}
     };
+  }
+
+  onDataError(error) {
+    if (error && error.includes('unreachable.server')) {
+      toast.error('Server not available.');
+    } else if (error && error.includes('Too.many.requests')) {
+      toast.error('Rate limit has been overpassed. Please retry in few minutes.');
+    } else if (error && error.includes('Entity.not.found')) {
+      toast.warn('Repository or owner name seems to be invalid.');
+    } else if (error && error.includes('Empty.or.invalid.input')) {
+      toast.warn('You have to use autocompleter to validate.');
+    }
   }
 
   onRepositoryChosen(repository) {
@@ -28,21 +46,29 @@ export default class Metric extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.fetchMetrics();
   }
 
   fetchMetrics() {
     const key = atob(this.state.key).split('#!!#');
     if (key && key.length === 2) {
-      this.setState({ isLoading: true}, () => {
-        metricsService.getCommitsMetrics(key[0], key[1], 1)
+      const owner = key[0];
+      const name = key[1];
+      this.setState({ isLoading: true, repository: { name, owner } }, () => {
+        metricsService.getCommitsMetrics(owner, name, 1)
           .then(metrics => {
+            metrics.details.sort((c1, c2) => {
+              if (c1.commitsCount === c2.commitsCount) return 0;
+              return (c1.commitsCount < c2.commitsCount) ? 1 : -1;
+            });
             this.setState({
               isLoading: false,
-              data: this.getChartData(metrics)
+              data: this.getChartData(metrics),
+              metrics: metrics.details
             });
-          });
+          })
+          .catch(err => this.onDataError(err.code));
       });
     }
   }
@@ -63,29 +89,37 @@ export default class Metric extends Component {
   }
 
   render() {
-    const { data, isLoading } = this.state;
+    const { data, metrics, repository, isLoading } = this.state;
     return (
       <Container>
+        <ToastContainer autoClose={3500} />
         <RepositorySelector onRepositoryChosen={this.onRepositoryChosen} />
         <div style={{ marginTop: '10px' }}>
+          <div style={{ textAlign: 'right' }}>
+            <h3>
+            <small style={{ color: 'gray' }}>{repository.owner} /</small>
+              &nbsp;{repository.name}
+            </h3>
+          </div>
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
             <Tab eventKey={1} title="Implication">
-              <Loader loaded={!isLoading}>
-                <Panel style={{ marginTop: '10px' }}>
-                  <Panel.Heading>
-                    <Panel.Title componentClass="h3">Users implication ratio</Panel.Title>
-                  </Panel.Heading>
-                  <Panel.Body>
-                    {data && <Pie data={data} />}
-                  </Panel.Body>
-                </Panel>
-              </Loader>
+              {!isLoading &&
+                <ImplicationTab isLoading={isLoading} chartOptions={data} />
+              }
             </Tab>
             <Tab eventKey={2} title="Committers">
-              Tab 2 content
+              {!isLoading &&
+                <CommittersTab isLoading={isLoading} commits={metrics} />
+              }
             </Tab>
-            <Tab eventKey={3} title="Commits flow" disabled>
-              Tab 3 content
+            <Tab eventKey={3} title="Commits line">
+              {!isLoading &&
+                <CommitsLineTab
+                  repositoryName={repository.name}
+                  repositoryOwner={repository.owner}
+                  onError={this.onDataError}
+                />
+              }
             </Tab>
           </Tabs>
         </div>

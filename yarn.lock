@@ -6597,6 +6597,12 @@ react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
+react-event-timeline@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-event-timeline/-/react-event-timeline-1.5.1.tgz#55d6b19138115178eadd47ae7352eedcc171bae9"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-loader@^2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/react-loader/-/react-loader-2.4.3.tgz#b4b878c760d4dff295bef7ed242a02014548e577"
