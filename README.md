@@ -18,6 +18,7 @@
 Source: https://medium.com/@blairanderson/you-probably-dont-need-redux-1b404204a07f
 
 **Architecture**
+
 The architecture is quite the same of a "standard" redux application architecture. Given that we have:
 * **public/** directory to store our pictures.
 * **src/** to store the source code.
