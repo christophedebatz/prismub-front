@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Panel } from 'react-bootstrap';
 import commitsService from '../services/commitsService';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
@@ -37,14 +38,23 @@ export default class CommitsLineTab extends Component {
               {this.state.commits.map((commit, i) => (
                 <TimelineEvent
                   key={i}
-                  title={commit.author.name}
-                  createdAt={commit.creationDate}
+                  title={
+                    <strong style={{ color: 'gray' }}>
+                      {commit.author.name}
+                    </strong>
+                  }
+                  createdAt={
+                    <strong>
+                      {moment(commit.creationDate).format('dddd, MMM Do YYYY, h:mm a')}
+                    </strong>
+                  }
+                  style={{ fontSize: '14px' }}
                   icon={
                     <img
                       src={commit.author.pictureUrl}
-                      style={{ borderRadius: '16px' }}
-                      height={32}
-                      width={32}
+                      style={{ borderRadius: '18px' }}
+                      height={36}
+                      width={36}
                     />
                   }
                 >
